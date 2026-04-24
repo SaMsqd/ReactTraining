@@ -5,7 +5,6 @@ interface CardsGeneratorFunc {
   (): CardProps[];
 }
 
-
 let card_generator_from_loop: CardsGeneratorFunc = () => {
   let tasks: CardProps[] = []
   for (let i = 0; i < 20; i++) {
@@ -18,7 +17,6 @@ let card_generator_from_loop: CardsGeneratorFunc = () => {
   }
   return tasks
 }
-
 
 function App() {
   return (

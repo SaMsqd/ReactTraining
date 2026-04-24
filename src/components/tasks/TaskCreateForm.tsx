@@ -1,5 +1,4 @@
 import React, { useRef, RefObject } from "react";
-
 import styles from "./Task.module.css";
 import { Button } from "../Button";
 
@@ -28,7 +27,7 @@ interface TaskCreateFunc {
 export function TaskCreateForm(func: TaskCreateFunc) {
     const title = useRef("");
     const describe = useRef("");
-    
+
     return (
         <>
             <h3 style={{ margin: 0, padding: 0 }}>NotModalWindow</h3>

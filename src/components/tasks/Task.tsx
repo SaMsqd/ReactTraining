@@ -16,9 +16,8 @@ interface Tasks {
 
 export function TasksBlock({ cards }: Tasks) {
     const [current_cards, changeCardsArray] = useState<CardProps[]>(cards);
-    const [fullScreenTask, setFullScreenTask] = useState<CardProps | null>(
-        null
-    );
+    const [fullScreenTask, setFullScreenTask] = useState<CardProps | null>(null);
+
     const [isCreateModalVisible, setModalVisible] = useState<boolean>(false);
 
     const toggleCreateModal = () => {
