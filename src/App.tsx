@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 import "./App.css";
 import { TasksBlock, type CardProps } from "./components/tasks/Task";
 
