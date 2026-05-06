@@ -1,4 +1,4 @@
-import React, { useRef, RefObject } from "react";
+import { useRef, type RefObject } from "react";
 import styles from "./Task.module.css";
 import { Button } from "../Button";
 
@@ -36,7 +36,7 @@ export function TaskCreateForm(func: TaskCreateFunc) {
                 <Input placeholder="Описание задачи" ref={describe} />
                 <Button
                     text="Создать задачу"
-                    onclick={() => func(title.current, describe.current)}
+                    onClick={() => func(title.current, describe.current)}
                 />
             </div>
         </>

@@ -3,18 +3,16 @@ import React from 'react';
 interface ButtonProps {
   id?: string;
   text: string;
-  onclick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
-  additionalStyle?: React.CSSProperties;
 }
 
-export function Button({ text, onclick, className, id, additionalStyle }: ButtonProps) {
+export function Button({ text, onClick, className, id }: ButtonProps) {
   return (
     <button
-      style={additionalStyle}
       id={id}
       className={className}
-      onClick={onclick}
+      onClick={onClick}
     >
       {text}
     </button>

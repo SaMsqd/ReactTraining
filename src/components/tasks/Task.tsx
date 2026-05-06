@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../Button";
 import styles from "./Task.module.css";
 import { Modal } from "../modal/Modal";
@@ -8,6 +8,8 @@ export interface CardProps {
     id: number;
     text: string;
     description?: string;
+    onOpenFullScreen?: (task: CardProps) => void;
+    handleDeleteTask: (task_id: number) => void;
 }
 
 interface Tasks {
@@ -15,7 +17,7 @@ interface Tasks {
 }
 
 export function TasksBlock({ cards }: Tasks) {
-    const [current_cards, changeCardsArray] = useState<CardProps[]>(cards);
+    const [currentCards, changeCardsArray] = useState<CardProps[]>(cards);
     const [fullScreenTask, setFullScreenTask] = useState<CardProps | null>(null);
 
     const [isCreateModalVisible, setModalVisible] = useState<boolean>(false);
@@ -33,32 +35,35 @@ export function TasksBlock({ cards }: Tasks) {
     };
 
     const deleteTask = (task_id: number) => {
-        changeCardsArray(
-            current_cards.filter((card) => {
+        changeCardsArray(prevCards => {
+            return prevCards.filter((card) => {
                 return card.id != task_id;
-            })
-        );
+            });
+        })
     };
 
-    const createTask = (text: string, description: string) => {
-      const last_id = current_cards.at(-1) ? current_cards.at(-1).id + 1 : 0
-      changeCardsArray([...current_cards, {id: last_id, text: text, description: description}])
+    const handleCreateTask = (text: string, description: string) => {
+        changeCardsArray(prevCards => {
+            const lastCard = prevCards.at(-1)
+            const lastId = lastCard ? lastCard.id + 1 : 0;
+            return [...prevCards, {id: lastId, text: text, description: description}]
+        })
     }
 
     return (
         <>
             <Button
                 text="clear"
-                onclick={() => changeCardsArray([])}
+                onClick={() => changeCardsArray([])}
             />
-            <Button text="create_task" onclick={toggleCreateModal} />
+            <Button text="create_task" onClick={toggleCreateModal} />
             <div className={styles.task_block}>
-                {current_cards.map((card) => (
+                {currentCards.map((card) => (
                     <TaskCard
                         key={card.id}
                         {...card}
                         onOpenFullScreen={openTaskFullScreen}
-                        deleteTask={deleteTask}
+                        handleDeleteTask={deleteTask}
                     />
                 ))}
             </div>
@@ -84,22 +89,15 @@ export function TasksBlock({ cards }: Tasks) {
                 closeOnEsc={true}
                 closeOnOverlayClick={true}
             >
-                {TaskCreateForm(createTask)}
+                {TaskCreateForm(handleCreateTask)}
             </Modal>
         </>
     );
 }
 
 export function TaskCard(
-    props: CardProps & { onOpenFullScreen?: (task: CardProps) => void } & {
-        deleteTask: (task_id: number) => void;
-    }
+    props: CardProps
 ) {
-    const buttonStyles = {
-        width: "100%",
-        height: "50%",
-    };
-
     const handleOpenTask = () => {
         props.onOpenFullScreen?.(props);
     };
@@ -110,13 +108,11 @@ export function TaskCard(
             <div>
                 <Button
                     text="Удалить"
-                    onclick={() => props.deleteTask?.(props.id)}
-                    additionalStyle={buttonStyles}
+                    onClick={() => props.handleDeleteTask?.(props.id)}
                 />
                 <Button
                     text="Посмотреть"
-                    onclick={handleOpenTask}
-                    additionalStyle={buttonStyles}
+                    onClick={handleOpenTask}
                 />
             </div>
         </div>
