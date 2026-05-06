@@ -1,15 +1,9 @@
-import { useState, useEffect } from "react";
-
 import "./App.css";
 import { TasksBlock, type CardProps } from "./components/tasks/Task";
 
-interface CardsGeneratorFunc {
-  (): CardProps[];
-}
 
-
-let card_generator_from_loop: CardsGeneratorFunc = () => {
-  let tasks: CardProps[] = []
+const getCardProps = (): CardProps[] => {
+  const tasks: CardProps[] = []
   for (let i = 0; i < 20; i++) {
     tasks.push(
       {
@@ -21,12 +15,11 @@ let card_generator_from_loop: CardsGeneratorFunc = () => {
   return tasks
 }
 
-
 function App() {
   return (
     <>
       <h2>Hello, World!</h2>
-      <TasksBlock cards={card_generator_from_loop()} />
+      <TasksBlock cards={getCardProps()} />
     </>
   );
 }
