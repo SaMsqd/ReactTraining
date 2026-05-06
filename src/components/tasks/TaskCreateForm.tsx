@@ -5,16 +5,17 @@ import { Button } from "../Button";
 interface CustomInput {
     placeholder: string;
     ref: RefObject<string>;
+    className: string;
 }
 
-export function Input({ placeholder, ref }: CustomInput) {
+export function Input({ placeholder, ref, className }: CustomInput) {
     return (
         <div className={styles.custom_input}>
             <input
                 onChange={(e) => (ref.current = e.target.value)}
                 defaultValue={ref.current}
-                style={{ width: "100%", height: "100%" }}
                 placeholder={placeholder}
+                className={className}
             />
         </div>
     );
@@ -27,13 +28,13 @@ interface TaskCreateFunc {
 export function TaskCreateForm(func: TaskCreateFunc) {
     const title = useRef("");
     const describe = useRef("");
-
+    console.log(styles.custom_input)
     return (
         <>
-            <h3 style={{ margin: 0, padding: 0 }}>NotModalWindow</h3>
+            <h3>NotModalWindow</h3>
             <div className={styles.task_form}>
-                <Input placeholder="Название задачи" ref={title} />
-                <Input placeholder="Описание задачи" ref={describe} />
+                <Input placeholder="Название задачи" ref={title} className={styles.custom_input} />
+                <Input placeholder="Описание задачи" ref={describe} className={styles.custom_input} />
                 <Button
                     text="Создать задачу"
                     onClick={() => func(title.current, describe.current)}

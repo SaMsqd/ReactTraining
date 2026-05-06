@@ -9,6 +9,8 @@
 
 #root {
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -17,4 +19,9 @@ body {
 
 button {
     display: block
+}
+
+custom_input {
+    width: 100%;
+    height: 100%;
 }
